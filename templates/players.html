@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Players — {{ club }}</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Nunito',sans-serif;background:#f0f4f8;color:#1e293b;min-height:100vh;}
+
+/* ── Sport colour variables set by Flask on <body class> ── */
+body.cricket {--cm:#16a34a;--cl:#dcfce7;--cd:#14532d;}
+body.football{--cm:#2563eb;--cl:#dbeafe;--cd:#1e3a8a;}
+body.kabaddi {--cm:#ea580c;--cl:#ffedd5;--cd:#7c2d12;}
+
+/* Navbar */
+.navbar{background:#1e293b;padding:14px 32px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 8px rgba(0,0,0,.15);}
+.brand{font-size:20px;font-weight:800;color:#fff;letter-spacing:1px;text-decoration:none;}
+.nbadge{font-size:13px;font-weight:700;padding:5px 14px;border-radius:20px;background:var(--cl);color:var(--cd);}
+
+/* Page */
+.page{max-width:920px;margin:36px auto;padding:0 20px;}
+
+/* Back btn */
+.btn-back{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:8px;border:2px solid #cbd5e1;background:#fff;color:#475569;font-size:14px;font-weight:600;font-family:'Nunito',sans-serif;cursor:pointer;text-decoration:none;transition:all .2s;margin-bottom:22px;}
+.btn-back:hover{background:#f1f5f9;border-color:#94a3b8;}
+
+/* Header row */
+.header-row{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:6px;}
+.club-chip{display:inline-flex;align-items:center;gap:7px;padding:7px 16px;border-radius:20px;font-size:13px;font-weight:800;background:var(--cl);color:var(--cd);margin-bottom:8px;}
+.section-title{font-size:26px;font-weight:900;color:#1e293b;}
+.count{font-size:13px;font-weight:700;color:#64748b;margin-bottom:4px;}
+.section-sub{font-size:14px;color:#64748b;margin-bottom:22px;}
+
+/* Toggle button */
+.toggle-btn{display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:8px;border:none;background:var(--cm);color:#fff;font-size:14px;font-weight:700;font-family:'Nunito',sans-serif;cursor:pointer;transition:opacity .2s;margin-bottom:18px;}
+.toggle-btn:hover{opacity:.88;}
+
+/* Add form */
+#add-form{display:none;}
+#add-form.open{display:block;}
+
+.form-box{background:#fff;border-radius:16px;padding:28px;box-shadow:0 2px 12px rgba(0,0,0,.07);margin-bottom:28px;}
+.form-box h3{font-size:17px;font-weight:800;margin-bottom:18px;color:#1e293b;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+.form-group{display:flex;flex-direction:column;gap:5px;margin-bottom:14px;}
+.form-group label{font-size:12px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.5px;}
+.form-group input,.form-group select{padding:10px 13px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:14px;font-family:'Nunito',sans-serif;color:#1e293b;background:#f8fafc;outline:none;transition:border-color .2s;}
+.form-group input:focus,.form-group select:focus{border-color:var(--cm);background:#fff;}
+
+.btn-submit{display:flex;align-items:center;justify-content:center;width:100%;padding:12px;border-radius:8px;border:none;background:var(--cm);color:#fff;font-size:15px;font-weight:700;font-family:'Nunito',sans-serif;cursor:pointer;transition:opacity .2s,transform .15s;margin-top:4px;}
+.btn-submit:hover{opacity:.9;transform:translateY(-1px);}
+
+/* Table */
+.table-box{background:#fff;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,.07);overflow:hidden;}
+.table-box table{width:100%;border-collapse:collapse;}
+.table-box th{padding:13px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;text-align:left;color:#fff;background:var(--cm);}
+.table-box td{padding:12px 14px;font-size:13px;border-bottom:1px solid #f1f5f9;color:#334155;}
+.table-box tr:last-child td{border-bottom:none;}
+.table-box tbody tr:hover td{background:#f8fafc;}
+
+.type-pill{padding:3px 10px;border-radius:10px;font-size:11px;font-weight:700;background:var(--cl);color:var(--cd);}
+
+.btn-edit,.btn-del{padding:5px 11px;border-radius:6px;font-size:12px;font-weight:700;font-family:'Nunito',sans-serif;text-decoration:none;display:inline-block;border:none;cursor:pointer;transition:opacity .2s;}
+.btn-edit{background:#fef3c7;color:#b45309;}
+.btn-del{background:#fee2e2;color:#dc2626;}
+.btn-edit:hover,.btn-del:hover{opacity:.75;}
+
+.empty-state{text-align:center;padding:40px;color:#94a3b8;font-size:15px;}
+</style>
+</head>
+<body class="{{ cfg.sport }}">
+
+<nav class="navbar">
+    <a class="brand" href="/dashboard">Sports Club</a>
+    <span class="nbadge">{{ cfg.emoji }} {{ cfg.name }}</span>
+</nav>
+
+<div class="page">
+    <a class="btn-back" href="/dashboard">← Dashboard</a>
+
+    <div class="header-row">
+        <div>
+            <div class="club-chip">{{ cfg.emoji }} {{ cfg.name }} ({{ club }})</div>
+            <div class="section-title">Players</div>
+        </div>
+        <span class="count">{{ players|length }} player{% if players|length != 1 %}s{% endif %}</span>
+    </div>
+    <div class="section-sub">Add, edit or remove players for {{ cfg.name }}</div>
+
+    <!-- Toggle add form -->
+    <button class="toggle-btn" id="toggleBtn" onclick="toggleForm()">+ Add Player</button>
+
+    <!-- ADD FORM -->
+    <div id="add-form" class="form-box">
+        <h3>New Player Details</h3>
+        <form action="/add_player" method="POST">
+            <input type="hidden" name="club" value="{{ club }}">
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Player Name</label>
+                    <input type="text" name="name" placeholder="Full name" required>
+                </div>
+                <div class="form-group">
+                    <label>Age</label>
+                    <input type="number" name="age" placeholder="e.g. 24" min="10" max="60" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Type / Position</label>
+                    <select name="type" required>
+                        <option value="" disabled selected>Select type</option>
+                        {% for t in ptypes %}
+                        <option value="{{ t }}">{{ t }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Assign Coach</label>
+                    <select name="coach" required>
+                        <option value="" disabled selected>Select coach</option>
+                        {% for c in coaches %}
+                        <option value="{{ c }}">{{ c }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Membership Expiry</label>
+                    <input type="date" name="expiry" required>
+                </div>
+                <div class="form-group">
+                    <label>Fees (₹)</label>
+                    <input type="number" name="fees" placeholder="e.g. 25000" required>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-submit">✓ Add Player</button>
+        </form>
+    </div>
+
+    <!-- PLAYERS TABLE -->
+    <div class="table-box">
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Type</th>
+                    <th>Coach</th>
+                    <th>Expiry</th>
+                    <th>Fees (₹)</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if players %}
+                    {% for p in players %}
+                    <tr>
+                        <td style="color:#94a3b8;font-weight:700;">{{ p[0] }}</td>
+                        <td style="font-weight:800;">{{ p[1] }}</td>
+                        <td>{{ p[2] }}</td>
+                        <td><span class="type-pill">{{ p[3] }}</span></td>
+                        <td style="color:#64748b;">{{ p[4] or '—' }}</td>
+                        <td>{{ p[5] }}</td>
+                        <td style="font-weight:700;">₹{{ '{:,}'.format(p[6]) if p[6] else '—' }}</td>
+                        <td>
+                            <a href="/update/{{ club }}/{{ p[0] }}" class="btn-edit">Edit</a>
+                            <a href="/delete/{{ club }}/{{ p[0] }}" class="btn-del"
+                               onclick="return confirm('Delete {{ p[1] }}?')">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr><td colspan="8" class="empty-state">No players yet — add your first one above!</td></tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<script>
+function toggleForm(){
+    const f=document.getElementById('add-form');
+    const b=document.getElementById('toggleBtn');
+    f.classList.toggle('open');
+    b.textContent=f.classList.contains('open')? '✕ Cancel' : '+ Add Player';
+}
+</script>
+</body>
+</html>
