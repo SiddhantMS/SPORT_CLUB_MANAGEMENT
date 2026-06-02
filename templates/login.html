@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sports Club — Login</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Nunito',sans-serif;height:100vh;display:flex;background:#f0f4f8;}
+
+.left{width:55%;background:#1e293b;display:flex;flex-direction:column;justify-content:center;padding:60px 70px;position:relative;overflow:hidden;}
+.left::before{content:'';position:absolute;width:380px;height:380px;border-radius:50%;background:rgba(255,255,255,.04);top:-100px;right:-80px;}
+.left::after{content:'';position:absolute;width:240px;height:240px;border-radius:50%;background:rgba(255,255,255,.04);bottom:-60px;left:40px;}
+
+.sport-row{display:flex;gap:12px;margin-bottom:32px;}
+.chip{padding:6px 16px;border-radius:20px;font-size:13px;font-weight:700;letter-spacing:.5px;}
+.chip-green{background:#dcfce7;color:#16a34a;}
+.chip-blue{background:#dbeafe;color:#2563eb;}
+.chip-orange{background:#ffedd5;color:#ea580c;}
+
+.left h1{font-size:58px;font-weight:900;color:#fff;line-height:1.05;margin-bottom:18px;}
+.left h1 span{color:#38bdf8;}
+.left p{font-size:16px;color:#94a3b8;line-height:1.7;max-width:380px;}
+
+.right{width:45%;display:flex;align-items:center;justify-content:center;padding:40px;}
+.login-card{width:100%;max-width:360px;}
+.login-card h2{font-size:26px;font-weight:800;color:#1e293b;margin-bottom:6px;}
+.login-card .subtitle{font-size:14px;color:#64748b;margin-bottom:32px;}
+
+.field{margin-bottom:18px;}
+.field label{display:block;font-size:12px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
+.field input{width:100%;padding:12px 15px;border:2px solid #e2e8f0;border-radius:10px;font-size:15px;font-family:'Nunito',sans-serif;color:#1e293b;background:#f8fafc;outline:none;transition:border-color .2s;}
+.field input:focus{border-color:#38bdf8;background:#fff;}
+
+.error-msg{background:#fee2e2;color:#dc2626;font-size:13px;font-weight:600;padding:10px 14px;border-radius:8px;margin-bottom:16px;}
+
+.btn-login{width:100%;padding:13px;background:#1e293b;color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:800;font-family:'Nunito',sans-serif;cursor:pointer;transition:background .2s,transform .15s;margin-top:6px;}
+.btn-login:hover{background:#0f172a;transform:translateY(-1px);}
+
+.hint{margin-top:18px;font-size:13px;color:#94a3b8;text-align:center;}
+.hint strong{color:#475569;}
+</style>
+</head>
+<body>
+
+<div class="left">
+    <div class="sport-row">
+        <span class="chip chip-green"> Cricket</span>
+        <span class="chip chip-blue"> Football</span>
+        <span class="chip chip-orange"> Kabaddi</span>
+    </div>
+    <h1>SPORT<br><span>CLUB</span><br>MANAGER</h1>
+    <p>Manage players, coaches and clubs across all your sports — simple, clean, and fast.</p>
+</div>
+
+<div class="right">
+    <div class="login-card">
+        <h2>Welcome</h2>
+        <p class="subtitle">Login to manage your sports club</p>
+
+        <!-- Jinja2 error block — works in Flask, hidden when opening as plain HTML -->
+        {% if error %}
+        <div class="error-msg">{{ error }}</div>
+        {% endif %}
+
+        <form action="{{ url_for('login') }}" method="POST">
+            <div class="field">
+                <label>Username</label>
+                <input type="text" name="username" placeholder="Enter username" required>
+            </div>
+            <div class="field">
+                <label>Password</label>
+                <input type="password" name="password" placeholder="Enter password" required>
+            </div>
+            <button type="submit" class="btn-login">Login →</button>
+        </form>
+
+        <p></p>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — Sports Club</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Nunito',sans-serif;background:#f0f4f8;color:#1e293b;min-height:100vh;}
+
+/* Navbar */
+.navbar{background:#1e293b;padding:14px 32px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 8px rgba(0,0,0,.15);}
+.navbar .brand{font-size:20px;font-weight:800;color:#fff;letter-spacing:1px;text-decoration:none;}
+.navbar span{font-size:14px;color:#94a3b8;font-weight:600;}
+
+/* Hero */
+.hero{text-align:center;padding:48px 20px 10px;}
+.hero h1{font-size:32px;font-weight:900;color:#1e293b;margin-bottom:8px;}
+.hero p{font-size:15px;color:#64748b;}
+
+/* Sports sections */
+.sports-wrap{max-width:860px;margin:36px auto;padding:0 20px;}
+.sport-block{margin-bottom:44px;}
+
+.sport-label{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+.sport-label .ltext{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;white-space:nowrap;}
+.sport-label .lline{flex:1;height:2px;border-radius:2px;}
+
+.c-label .ltext,.c-label .lline{color:#16a34a;background:#16a34a;}
+.f-label .ltext,.f-label .lline{color:#2563eb;background:#2563eb;}
+.k-label .ltext,.k-label .lline{color:#ea580c;background:#ea580c;}
+.c-label .ltext{background:transparent;}
+.f-label .ltext{background:transparent;}
+.k-label .ltext{background:transparent;}
+
+/* Club cards */
+.club-cards{display:flex;gap:16px;flex-wrap:wrap;}
+.club-card{flex:1;min-width:150px;padding:24px 16px;border-radius:14px;text-align:center;cursor:pointer;text-decoration:none;background:#fff;border:2px solid transparent;box-shadow:0 2px 10px rgba(0,0,0,.07);transition:all .22s ease;display:flex;flex-direction:column;align-items:center;gap:8px;}
+.club-card .c-emoji{font-size:28px;}
+.club-card .c-abbr{font-size:17px;font-weight:900;color:#1e293b;}
+.club-card .c-full{font-size:11px;font-weight:600;color:#94a3b8;}
+
+/* hover colors per sport */
+.club-card.cc:hover{border-color:#16a34a;background:#f0fdf4;transform:translateY(-4px);box-shadow:0 8px 20px rgba(22,163,74,.15);}
+.club-card.fc:hover{border-color:#2563eb;background:#eff6ff;transform:translateY(-4px);box-shadow:0 8px 20px rgba(37,99,235,.15);}
+.club-card.kc:hover{border-color:#ea580c;background:#fff7ed;transform:translateY(-4px);box-shadow:0 8px 20px rgba(234,88,12,.15);}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+    <a class="brand" href="/dashboard">Sports Club</a>
+</nav>
+
+<div class="hero">
+    <h1>Sports Dashboard</h1>
+    <p>Pick a club below to view and manage its players</p>
+</div>
+
+<div class="sports-wrap">
+
+    <!-- CRICKET -->
+    <div class="sport-block">
+        <div class="sport-label c-label">
+            <span class="ltext">Cricket</span>
+            <div class="lline"></div>
+        </div>
+        <div class="club-cards">
+            <a class="club-card cc" href="/players/MI">
+                <span class="c-abbr">MI</span>
+                <span class="c-full">Mumbai Indians</span>
+            </a>
+            <a class="club-card cc" href="/players/CSK">
+                <span class="c-abbr">CSK</span>
+                <span class="c-full">Chennai Super Kings</span>
+            </a>
+            <a class="club-card cc" href="/players/RR">
+                <span class="c-abbr">RR</span>
+                <span class="c-full">Rajasthan Royals</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- FOOTBALL -->
+    <div class="sport-block">
+        <div class="sport-label f-label">
+            <span class="ltext">Football</span>
+            <div class="lline"></div>
+        </div>
+        <div class="club-cards">
+            <a class="club-card fc" href="/players/FCB">
+                <span class="c-abbr">FCB</span>
+                <span class="c-full">FC Barcelona</span>
+            </a>
+            <a class="club-card fc" href="/players/RMA">
+                <span class="c-abbr">RMA</span>
+                <span class="c-full">Real Madrid</span>
+            </a>
+            <a class="club-card fc" href="/players/PSG">
+                <span class="c-abbr">PSG</span>
+                <span class="c-full">Paris Saint-Germain</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- KABADDI -->
+    <div class="sport-block">
+        <div class="sport-label k-label">
+            <span class="ltext">Kabaddi</span>
+            <div class="lline"></div>
+        </div>
+        <div class="club-cards">
+            <a class="club-card kc" href="/players/UP">
+                <span class="c-abbr">UP</span>
+                <span class="c-full">UP Yoddhas</span>
+            </a>
+            <a class="club-card kc" href="/players/Jaipur">
+                <span class="c-abbr">Jaipur</span>
+                <span class="c-full">Jaipur Pink Panthers</span>
+            </a>
+            <a class="club-card kc" href="/players/Patna">
+                <span class="c-abbr">Patna</span>
+                <span class="c-full">Patna Pirates</span>
+            </a>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
